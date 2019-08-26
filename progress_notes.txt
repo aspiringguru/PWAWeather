@@ -1,1 +1,12 @@
 https://codelabs.developers.google.com/codelabs/your-first-pwapp/index.html#1
+https://github.com/googlecodelabs/your-first-pwapp/archive/master.zip
+unzip, copy to working dir, delete zip file
+npm install
+
+
+nb: after updating service worker to add offline.html,
+needed to update service worker in
+devtools > service workers > update.
+then the panda offline page appeared.
+
+ 
