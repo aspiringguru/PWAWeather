@@ -126,8 +126,7 @@ const fakeForecast = {
  * @return {Object} forecast object.
  */
 function generateFakeForecast(location) {
-  //location = location || '40.7720232,-73.9732319';
-  location = location || '-27.4698,153.0251';
+  location = location || '40.7720232,-73.9732319';
   const commaAt = location.indexOf(',');
 
   // Create a new copy of the forecast
@@ -143,17 +142,15 @@ function generateFakeForecast(location) {
  *
  * @param {Request} req request object from Express.
  * @param {Response} resp response object from Express.
- * https://api.darksky.net/forecast/[key]/[latitude],[longitude]
- * https://darksky.net/dev/docs#forecast-request  units=si
  *
+ * https://darksky.net/dev/docs#forecast-request
+ *
+ * https://api.darksky.net/forecast/[key]/[latitude],[longitude]?units=si
  */
 function getForecast(req, resp) {
-  //const location = req.params.location || '40.7720232,-73.9732319';
   const location = req.params.location || '-27.4698,153.0251';
   //const url = `${BASE_URL}/${API_KEY}/${location}`;
   const url = `${BASE_URL}/${API_KEY}/${location}?units=si`;
-  //NB: changing to si requires Celsius/Fahrenheight and km/hr or mph
-  console.log("getForecast, url="+url);
   fetch(url).then((resp) => {
     if (resp.status !== 200) {
       throw new Error(resp.statusText);
