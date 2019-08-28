@@ -29,8 +29,19 @@ function toggleAddDialog() {
   weatherApp.addDialogContainer.classList.toggle('visible');
 }
 
+function addLocationn() {
+  console.log("function addLocationn()")
+  // Hide the dialog
+  toggleAddDialog();
+  // Get the selected city
+  const location = document.getElementById('location').value;
+  console.log("location : "+location)
+}
+
 /**
  * Event handler for butDialogAdd, adds the selected location to the list.
+ * selectCityToAdd
+ *
  */
 function addLocation() {
   // Hide the dialog
@@ -265,7 +276,6 @@ function init() {
   // Get the location list, and update the UI.
   weatherApp.selectedLocations = loadLocationList();
   updateData();
-
   // Set up the event handlers for all of the buttons.
   document.getElementById('butRefresh').addEventListener('click', updateData);
   document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
@@ -273,6 +283,30 @@ function init() {
       .addEventListener('click', toggleAddDialog);
   document.getElementById('butDialogAdd')
       .addEventListener('click', addLocation);
+  console.log("document.getElementById('ButDialogAdd2')="+document.getElementById('textButDialogAdd'))
+  document.getElementById('ButDialogAdd2')
+      .addEventListener('click', addLocationn);
+  //now load cities and populate options
+  var select = document.getElementById("selectCityToAdd2");
+  console.log("select:"+select)
+  console.log("in index.html, cities.length:"+cities.length)
+  //console.log("cities:"+cities)
+  for(var i = 0; i < cities.length; i++) {
+      console.log("i="+i+":"+cities[i])
+      console.log("cities["+i+"].city :"+cities[i].city)
+      console.log("cities["+i+"].city_ascii :"+cities[i].city_ascii)
+      console.log("cities["+i+"].lat :"+cities[i].lat)
+      console.log("cities["+i+"].lon :"+cities[i].lng)
+      console.log("cities["+i+"].country :"+cities[i].country)
+      //<option value="40.6976701,-74.2598666">New York, USA</option>
+      var el = document.createElement("option");
+      el.text = cities[i].city_ascii+", "+cities[i].country;
+      el.value = cities[i].lat+","+cities[i].lng;
+      console.log("el.text:"+el.text)
+      console.log("el.value:"+el.value)
+      select.add(el);
+  }
+
 }
 
 init();

@@ -1,0 +1,64 @@
+
+
+elasticip = 13.236.164.196
+aws instance = i-0bff0014b3018be84
+
+#reusing ip's on enw server?
+#delete old keys from /c/Users/Matthew/.ssh/known_hosts
+ssh -i /d/2018_working/coding/sleepyhollowAWSAugust2019.pem ubuntu@13.236.164.196
+sftp -i /d/2018_working/coding/sleepyhollowAWSAugust2019.pem ubuntu@13.236.164.196
+
+#setup testServer.js node scripts for a few ports.
+#open AWS firewall to allow ports
+
+
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt install python-certbot-nginx
+
+nginx -v
+
+/home/ubuntu/gitRepo/awsConfig/defaulthtml
+
+sudo vim /etc/nginx/sites-available/default
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo apt install lynx
+
+sudo lsof -i -P -n | grep LISTEN
+sudo netstat -tulpn | grep LISTEN
+
+13.236.164.196
+
+#setup git to work on aws ec2 server
+#useful info for setting up git and github
+https://mycyberuniverse.com/how-fix-fatal-authentication-failed-for-https-github-com.html
+https://alvinalexander.com/git/git-show-change-username-email-address
+#create new token, enter when requested for password
+
+#want to see git username and email on existing pc
+#with github access
+git config --list
+
+#on the AWS EC2 server
+git config --global user.name "aspiringguru"
+git config --global user.email "bmatthewtaylor@gmail.com"
+git config credential.helper store
+#should only need to enter the token (when requested for password) once
+git clone https://github.com/aspiringguru/awsConfig.git
+
+#when in the git repo, backup config files
+cp /etc/nginx/sites-available/default .
+
+sudo vim /etc/nginx/sites-available/default
+
+https://tecadmin.net/install-latest-nodejs-npm-on-ubuntu/
+
+sudo certbot --nginx -d peerbanking.com.au -d www.peerbanking.com.au
+
+/etc/letsencrypt/live/peerbanking.com.au/fullchain.pem
+/etc/letsencrypt/live/peerbanking.com.au/privkey.pem
+
+sudo certbot --nginx -d automationservices.host -d www.automationservices.host
+/etc/letsencrypt/live/automationservices.host/fullchain.pem
+/etc/letsencrypt/live/automationservices.host/privkey.pem
