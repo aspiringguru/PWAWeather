@@ -17,6 +17,8 @@
  */
 'use strict';
 
+var visible = false;
+
 const weatherApp = {
   selectedLocations: {},
   addDialogContainer: document.getElementById('addDialogContainer'),
@@ -27,15 +29,78 @@ const weatherApp = {
  */
 function toggleAddDialog() {
   weatherApp.addDialogContainer.classList.toggle('visible');
+  visible = !visible;
+  //populate the drop down options.
+  if (visible) {
+      console.log("visible is True, start populateOptions()")
+      populateOptions();
+  } else {
+      console.log("visible is false, do not start populateOptions()")
+  }
+}
+
+function getLatLon() {
+    console.log("start function getLatLon()");
+    //now get the values from the form and obtain lat,lon
+    const select = document.getElementById('selectCityToAdd3');
+    console.log("select:"+select)
+    console.log("select.value:"+select.value)
+    const selectedValue = select.value;
+    //now find index of cities where cities.?? matches citie
+    var cityCountry = "";
+    var index = 0
+    for(var i = 0; i < cities.length; i++) {
+        cityCountry = cities[i].city_ascii+", "+cities[i].country;
+        if (selectedValue === cityCountry) {
+            index = i;
+            break;
+        }
+    }
+    console.log("match found at index:"+index);
+    console.log("city, country:"+cityCountry);
+    console.log("lat:"+cities[index].lat)
+    console.log("lon:"+cities[index].lng)
+    //
+    /*
+    select = document.getElementById('selectCityToAdd2');
+    selected = select.options[select.selectedIndex];
+    geo = selected.value;
+    label = selected.textContent;
+    console.log("results from getElementById('cities')");
+    console.log("select:"+select)
+    console.log("selected:"+selected)
+    console.log("geo:"+geo)
+    console.log("label:"+label)
+    */
+    console.log("end function getLatLon()");
+    return ([cities[index].lat, cities[index].lng, cityCountry])
 }
 
 function addLocationn() {
-  console.log("function addLocationn()")
+  console.log("start function addLocationn()")
+  getLatLon();
   // Hide the dialog
   toggleAddDialog();
-  // Get the selected city
-  const location = document.getElementById('location').value;
-  console.log("location : "+location)
+
+  // Get the selected city xxxxxx
+  var results = getLatLon();
+  console.log("results:"+results);
+  console.log("lat:"+results[0]);
+  console.log("lon:"+results[1]);
+  console.log("City,Country:"+results[2]);
+  var geo = results[0]+","+results[1];
+  console.log("geo:"+geo);
+  const location = {label: results[2], geo: geo};
+  // Create a new card & get the weather data from the server
+  const card = getForecastCard(location);
+  getForecastFromNetwork(geo).then((forecast) => {
+    renderForecast(card, forecast);
+  });
+  // Save the updated list of selected cities.
+  weatherApp.selectedLocations[geo] = location;
+  saveLocationList(weatherApp.selectedLocations);
+
+  console.log("end function addLocationn()")
 }
 
 /**
@@ -51,6 +116,8 @@ function addLocation() {
   const selected = select.options[select.selectedIndex];
   const geo = selected.value;
   const label = selected.textContent;
+  console.log("geo:"+geo);
+  console.log("label:"+label);
   const location = {label: label, geo: geo};
   // Create a new card & get the weather data from the server
   const card = getForecastCard(location);
@@ -268,6 +335,38 @@ function loadLocationList() {
   return locations;
 }
 
+/*
+ *  Populate the drop down list.
+ *
+ *
+ */
+function populateOptions() {
+    console.log("start function populateOptions()")
+    //now load cities and populate options
+    var select = document.getElementById("selectCityToAdd2");
+    console.log("select:"+select)
+    console.log("in index.html, cities.length:"+cities.length)
+    var options = '';
+    //reset innerHTML to "" before generating content to insert
+    document.getElementById('cities').innerHTML = options;
+    //console.log("cities:"+cities)
+    for(var i = 0; i < cities.length; i++) {
+        var el = document.createElement("option");
+        var tempText = cities[i].city_ascii+", "+cities[i].country;
+        var tempValue = cities[i].lat+","+cities[i].lng
+        el.text = tempText;
+        el.value = tempValue;
+        //console.log("tempText:"+tempText)
+        //console.log("tempValue:"+tempValue)
+        select.add(el);
+        var tempOptions = "<option>"+tempText+"</option>";
+        //console.log("tempOptions:"+tempOptions)
+        options += tempOptions;
+    }
+    document.getElementById('cities').innerHTML = options;
+    console.log("end function populateOptions()")
+}
+
 /**
  * Initialize the app, gets the list of locations from local storage, then
  * renders the initial data.
@@ -283,30 +382,9 @@ function init() {
       .addEventListener('click', toggleAddDialog);
   document.getElementById('butDialogAdd')
       .addEventListener('click', addLocation);
-  console.log("document.getElementById('ButDialogAdd2')="+document.getElementById('textButDialogAdd'))
   document.getElementById('ButDialogAdd2')
       .addEventListener('click', addLocationn);
-  //now load cities and populate options
-  var select = document.getElementById("selectCityToAdd2");
-  console.log("select:"+select)
-  console.log("in index.html, cities.length:"+cities.length)
-  //console.log("cities:"+cities)
-  for(var i = 0; i < cities.length; i++) {
-      console.log("i="+i+":"+cities[i])
-      console.log("cities["+i+"].city :"+cities[i].city)
-      console.log("cities["+i+"].city_ascii :"+cities[i].city_ascii)
-      console.log("cities["+i+"].lat :"+cities[i].lat)
-      console.log("cities["+i+"].lon :"+cities[i].lng)
-      console.log("cities["+i+"].country :"+cities[i].country)
-      //<option value="40.6976701,-74.2598666">New York, USA</option>
-      var el = document.createElement("option");
-      el.text = cities[i].city_ascii+", "+cities[i].country;
-      el.value = cities[i].lat+","+cities[i].lng;
-      console.log("el.text:"+el.text)
-      console.log("el.value:"+el.value)
-      select.add(el);
-  }
-
+  populateOptions();
 }
 
 init();
