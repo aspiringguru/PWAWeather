@@ -343,8 +343,8 @@ function loadLocationList() {
 function populateOptions() {
     console.log("start function populateOptions()")
     //now load cities and populate options
-    var select = document.getElementById("selectCityToAdd2");
-    console.log("select:"+select)
+    //var select = document.getElementById("selectCityToAdd2");
+    //console.log("select:"+select)
     console.log("in index.html, cities.length:"+cities.length)
     var options = '';
     //reset innerHTML to "" before generating content to insert
@@ -353,12 +353,12 @@ function populateOptions() {
     for(var i = 0; i < cities.length; i++) {
         var el = document.createElement("option");
         var tempText = cities[i].city_ascii+", "+cities[i].country;
-        var tempValue = cities[i].lat+","+cities[i].lng
-        el.text = tempText;
-        el.value = tempValue;
+        //var tempValue = cities[i].lat+","+cities[i].lng
+        //el.text = tempText;
+        //el.value = tempValue;
         //console.log("tempText:"+tempText)
         //console.log("tempValue:"+tempValue)
-        select.add(el);
+        //select.add(el);
         var tempOptions = "<option>"+tempText+"</option>";
         //console.log("tempOptions:"+tempOptions)
         options += tempOptions;
