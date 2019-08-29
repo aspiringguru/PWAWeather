@@ -26,9 +26,11 @@ const weatherApp = {
 
 /**
  * Toggles the visibility of the add location dialog box.
+ * known problem: cannot get population of dropdown autocomplete
+ * to work for second use. nfi idea why.
+ * console logs show the options are populated but not displaying
  */
 function toggleAddDialog() {
-  weatherApp.addDialogContainer.classList.toggle('visible');
   visible = !visible;
   //populate the drop down options.
   if (visible) {
@@ -37,6 +39,8 @@ function toggleAddDialog() {
   } else {
       console.log("visible is false, do not start populateOptions()")
   }
+  //tried moving this line above the if, didn't fix problem.
+  weatherApp.addDialogContainer.classList.toggle('visible');
 }
 
 function getLatLon() {
@@ -345,7 +349,7 @@ function populateOptions() {
     //now load cities and populate options
     //var select = document.getElementById("selectCityToAdd2");
     //console.log("select:"+select)
-    console.log("in index.html, cities.length:"+cities.length)
+    console.log("in function populateOptions: cities.length:"+cities.length)
     var options = '';
     //reset innerHTML to "" before generating content to insert
     document.getElementById('cities').innerHTML = options;
@@ -360,9 +364,10 @@ function populateOptions() {
         //console.log("tempValue:"+tempValue)
         //select.add(el);
         var tempOptions = "<option>"+tempText+"</option>";
-        //console.log("tempOptions:"+tempOptions)
+        console.log("adding tempOptions to options:"+tempOptions)
         options += tempOptions;
     }
+    console.log("at end of for loop, options:\n"+options)
     document.getElementById('cities').innerHTML = options;
     console.log("end function populateOptions()")
 }
@@ -379,6 +384,8 @@ function init() {
   document.getElementById('butRefresh').addEventListener('click', updateData);
   document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
   document.getElementById('butDialogCancel')
+      .addEventListener('click', toggleAddDialog);
+  document.getElementById('butDialogCancel2')
       .addEventListener('click', toggleAddDialog);
   document.getElementById('butDialogAdd')
       .addEventListener('click', addLocation);
