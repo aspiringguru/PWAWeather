@@ -364,10 +364,10 @@ function populateOptions() {
         //console.log("tempValue:"+tempValue)
         //select.add(el);
         var tempOptions = "<option>"+tempText+"</option>";
-        console.log("adding tempOptions to options:"+tempOptions)
+        //console.log("adding tempOptions to options:"+tempOptions)
         options += tempOptions;
     }
-    console.log("at end of for loop, options:\n"+options)
+    //console.log("at end of for loop, options:\n"+options)
     document.getElementById('cities').innerHTML = options;
     console.log("end function populateOptions()")
 }
@@ -392,6 +392,7 @@ function init() {
   document.getElementById('ButDialogAdd2')
       .addEventListener('click', addLocationn);
   populateOptions();
+  getLocation();
 }
 
 init();
