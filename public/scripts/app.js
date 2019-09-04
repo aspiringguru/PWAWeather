@@ -17,6 +17,9 @@
  */
 'use strict';
 
+var userLat;
+var userLon;
+
 var visible = false;
 
 const weatherApp = {
@@ -86,7 +89,7 @@ function addLocationn() {
   // Hide the dialog
   toggleAddDialog();
 
-  // Get the selected city xxxxxx
+  // Get the selected city
   var results = getLatLon();
   console.log("results:"+results);
   console.log("lat:"+results[0]);
@@ -317,24 +320,64 @@ function saveLocationList(locations) {
   localStorage.setItem('locationList', data);
 }
 
+//https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+  userLat = crd.latitude;
+  userLon = crd.longitude;
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+
 /**
  * Loads the list of saved location.
  *
  * @return {Array}
  */
 function loadLocationList() {
+  console.log("start loadLocationList()");
   let locations = localStorage.getItem('locationList');
   if (locations) {
     try {
+      console.log("locations exists, now locations=JSON.parse(locations)")
       locations = JSON.parse(locations);
     } catch (ex) {
+      console.log("error caught, set locations={}");
       locations = {};
     }
   }
   if (!locations || Object.keys(locations).length === 0) {
-    const key = '40.7720232,-73.9732319';
+    console.log("!locations="+!locations);
+    if (locations) {
+        console.log("Object.keys(locations).length="+Object.keys(locations).length);
+    }
+    //
+    console.log("myCityCountry:"+myCityCountry);
+    //console.log("myLatLon:"+myLatLon);
+    navigator.geolocation.getCurrentPosition(success, error, options);
+    //calls success(pos), nfi where pos comes from. gah!
+    //userLat and userLon now have non null values
+    console.log("userLat:"+userLat);
+    console.log("userLon:"+userLon);
+    //need to redo to get non null values asynch??
+    const key = '-27.4698,153.0251';
     locations = {};
     locations[key] = {label: 'Brisbane, Australia', geo: '-27.4698,153.0251'};
+    //xxxxx
   }
   return locations;
 }

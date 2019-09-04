@@ -1,4 +1,4 @@
-
+var myCityCountry = "";
 cities = [
   {
     "city": "Malishev�",
@@ -90729,6 +90729,33 @@ cities.forEach((item, index)=>{
 });
 */
 
+function getLocation() {
+  var x = document.getElementById("geolocation");
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+function showPosition(position) {
+  var latlon = document.getElementById("latlon");
+  var city = document.getElementById("city");
+  console.log("position.coords.latitude:"+position.coords.latitude);
+  console.log("position.coords.longitude:"+position.coords.longitude);
+  console.log("typeof(position.coords.longitude):"+typeof(position.coords.longitude));
+  //number
+
+  latlon.innerHTML = "Your location = Lat: " + position.coords.latitude.toFixed(3) +
+  " Lon: " + position.coords.longitude.toFixed(3);
+  result = NearestCity(position.coords.latitude, position.coords.longitude)
+  console.log("result:", result)
+  console.log("result.city :"+result.city)
+  console.log("result.lat :"+result.lat)
+  console.log("result.lon :"+result.lng)
+  console.log("result.country :"+result.country)
+  myCityCountry = result.city + ", " + result.country;
+  city.innerHTML = "Nearest City = " + myCityCountry;
+}
 
 // Callback function for asynchronous call to HTML5 geolocation
 function UserLocation(position) {
@@ -90766,7 +90793,7 @@ var cities = [
 ];
 */
 
-/*
+
 function NearestCity(latitude, longitude) {
   var minDif = 99999;
   var closest;
@@ -90781,10 +90808,25 @@ function NearestCity(latitude, longitude) {
   // return the nearest city
   return(cities[closest]);
 }
-*/
+
 
 
 //test/demo
-//console.log(NearestCity(-27.5610826, 152.8840974));
-//location = getLocation()
-//console.log(NearestCity(location[0], location[1]))
+console.log("NearestCity(-27.5610826, 152.8840974):");
+result = NearestCity(-27.5610826, 152.8840974);
+console.log("result:", result)
+console.log("result.city :"+result.city)
+console.log("result.lat :"+result.lat)
+console.log("result.lon :"+result.lng)
+console.log("result.country :"+result.country)
+
+/*
+location = getLocation()//cannot run this in same file function generated.
+result = NearestCity(location[0], location[1])
+console.log("NearestCity("+location[0]+", "+location[1]+"):")
+console.log("result:", result)
+console.log("result.city :"+result.city)
+console.log("result.lat :"+result.lat)
+console.log("result.lon :"+result.lng)
+console.log("result.country :"+result.country)
+*/

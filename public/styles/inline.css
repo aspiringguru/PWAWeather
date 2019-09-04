@@ -16,6 +16,25 @@
  * limitations under the License
  */
 
+ #leftbox {
+    float:left;
+    background:#3f51b5;
+    width:25%;
+    height:30px;
+}
+#latlon{
+    float:left;
+    background:#3f51b5;
+    width:50%;
+    height:30px;
+}
+#city{
+    float:right;
+    background:#3f51b5;
+    width:25%;
+    height:30px;
+}
+
 * {
   box-sizing: border-box;
 }

@@ -43,7 +43,9 @@
 
   <header class="header">
     <h1>
-      Weather App <div id="geolocation"></div>
+      <div id = "leftbox">Weather App</div>
+      <div id="latlon"></div>
+      <div id="city"></div>
     </h1>
     <button id="butInstall" aria-label="Install" hidden></button>
     <button id="butRefresh" aria-label="Refresh"></button>
@@ -217,23 +219,6 @@
     </div>
   </div>
 
-  <script>
-      function getLocation() {
-        var x = document.getElementById("geolocation");
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-          x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-      }
-      function showPosition(position) {
-        var x = document.getElementById("geolocation");
-        x.innerHTML = "Lat: " + position.coords.latitude +
-        " Lon: " + position.coords.longitude;
-        console.log("x.innerHTML:"+x.innerHTML)
-      }
-
-  </script>
   <script src="/scripts/cities.js"></script>
   <script src="/scripts/luxon-1.11.4.js"></script>
   <script src="/scripts/app.js"></script>
