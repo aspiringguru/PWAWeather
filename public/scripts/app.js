@@ -17,8 +17,8 @@
  */
 'use strict';
 
-var userLat;
-var userLon;
+//var userLat;
+//var userLon;
 
 var visible = false;
 
@@ -38,7 +38,7 @@ function toggleAddDialog() {
   //populate the drop down options.
   if (visible) {
       console.log("visible is True, start populateOptions()")
-      populateOptions();
+      //populateOptions();
   } else {
       console.log("visible is false, do not start populateOptions()")
   }
@@ -49,13 +49,14 @@ function toggleAddDialog() {
 function getLatLon() {
     console.log("start function getLatLon()");
     //now get the values from the form and obtain lat,lon
-    const select = document.getElementById('selectCityToAdd3');
-    console.log("select:"+select)
-    console.log("select.value:"+select.value)
-    const selectedValue = select.value;
+    //const select = document.getElementById('selectCityToAdd3');
+    //console.log("select:"+select)
+    //console.log("select.value:"+select.value)
+    //const selectedValue = select.value;
     //now find index of cities where cities.?? matches citie
-    var cityCountry = "";
-    var index = 0
+    //var cityCountry = "";
+    //var index = 0
+    /*
     for(var i = 0; i < cities.length; i++) {
         cityCountry = cities[i].city_ascii+", "+cities[i].country;
         if (selectedValue === cityCountry) {
@@ -67,6 +68,8 @@ function getLatLon() {
     console.log("city, country:"+cityCountry);
     console.log("lat:"+cities[index].lat)
     console.log("lon:"+cities[index].lng)
+    */
+
     //
     /*
     select = document.getElementById('selectCityToAdd2');
@@ -79,13 +82,13 @@ function getLatLon() {
     console.log("geo:"+geo)
     console.log("label:"+label)
     */
-    console.log("end function getLatLon()");
-    return ([cities[index].lat, cities[index].lng, cityCountry])
+    //console.log("end function getLatLon()");
+    //return ([cities[index].lat, cities[index].lng, cityCountry])
 }
 
 function addLocationn() {
   console.log("start function addLocationn()")
-  getLatLon();
+  //getLatLon();
   // Hide the dialog
   toggleAddDialog();
 
@@ -116,6 +119,7 @@ function addLocationn() {
  *
  */
 function addLocation() {
+  console.log("start addLocation()")
   // Hide the dialog
   toggleAddDialog();
   // Get the selected city
@@ -327,6 +331,7 @@ var options = {
   maximumAge: 0
 };
 
+/*
 function success(pos) {
   var crd = pos.coords;
   userLat = crd.latitude;
@@ -341,7 +346,7 @@ function success(pos) {
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
-
+*/
 
 /**
  * Loads the list of saved location.
@@ -366,13 +371,14 @@ function loadLocationList() {
         console.log("Object.keys(locations).length="+Object.keys(locations).length);
     }
     //
-    console.log("myCityCountry:"+myCityCountry);
+    //reinstate next line when speed issues resolved.
+    //console.log("myCityCountry:"+myCityCountry);
     //console.log("myLatLon:"+myLatLon);
-    navigator.geolocation.getCurrentPosition(success, error, options);
+    //navigator.geolocation.getCurrentPosition(success, error, options);
     //calls success(pos), nfi where pos comes from. gah!
     //userLat and userLon now have non null values
-    console.log("userLat:"+userLat);
-    console.log("userLon:"+userLon);
+    //console.log("userLat:"+userLat);
+    //console.log("userLon:"+userLon);
     //need to redo to get non null values asynch??
     const key = '-27.4698,153.0251';
     locations = {};
@@ -390,8 +396,8 @@ function loadLocationList() {
 function populateOptions() {
     console.log("start function populateOptions()")
     //now load cities and populate options
-    //var select = document.getElementById("selectCityToAdd2");
-    //console.log("select:"+select)
+    var select = document.getElementById("selectCityToAdd2");
+    console.log("select:"+select)
     console.log("in function populateOptions: cities.length:"+cities.length)
     var options = '';
     //reset innerHTML to "" before generating content to insert
@@ -428,14 +434,16 @@ function init() {
   document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
   document.getElementById('butDialogCancel')
       .addEventListener('click', toggleAddDialog);
-  document.getElementById('butDialogCancel2')
-      .addEventListener('click', toggleAddDialog);
   document.getElementById('butDialogAdd')
       .addEventListener('click', addLocation);
+  /*
+  document.getElementById('butDialogCancel2')
+      .addEventListener('click', toggleAddDialog);
   document.getElementById('ButDialogAdd2')
       .addEventListener('click', addLocationn);
-  populateOptions();
-  getLocation();
+      */
+  //populateOptions();
+  //getLocation();
 }
 
 init();
