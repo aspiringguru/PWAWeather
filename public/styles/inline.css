@@ -16,13 +16,13 @@
  * limitations under the License
  */
 
- #leftbox {
+ #latlon {
     float:left;
     background:#3f51b5;
-    width:25%;
+    width:50%;
     height:30px;
 }
-#latlon{
+#aaspare{
     float:left;
     background:#3f51b5;
     width:50%;
@@ -31,7 +31,7 @@
 #city{
     float:right;
     background:#3f51b5;
-    width:25%;
+    width:50%;
     height:30px;
 }
 

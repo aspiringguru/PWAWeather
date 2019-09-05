@@ -90745,7 +90745,7 @@ function showPosition(position) {
   console.log("typeof(position.coords.longitude):"+typeof(position.coords.longitude));
   //number
 
-  latlon.innerHTML = "Your location = Lat: " + position.coords.latitude.toFixed(3) +
+  latlon.innerHTML = "Lat: " + position.coords.latitude.toFixed(3) +
   " Lon: " + position.coords.longitude.toFixed(3);
   result = NearestCity(position.coords.latitude, position.coords.longitude)
   console.log("result:", result)

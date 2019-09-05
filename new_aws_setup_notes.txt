@@ -62,3 +62,8 @@ sudo certbot --nginx -d peerbanking.com.au -d www.peerbanking.com.au
 sudo certbot --nginx -d automationservices.host -d www.automationservices.host
 /etc/letsencrypt/live/automationservices.host/fullchain.pem
 /etc/letsencrypt/live/automationservices.host/privkey.pem
+
+
+NBB: need to run on https, cannot run on ip number without https
+ERROR(1): Only secure origins are allowed (see: https://goo.gl/Y0ZkNV).
+https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features
